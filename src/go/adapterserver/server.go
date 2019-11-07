@@ -4,7 +4,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"google.golang.org/grpc/channelz/service"
 	"log"
 	"net"
 
@@ -15,10 +14,10 @@ import (
 )
 
 var (
-	tls        = flag.Bool("tls", false, "Connection uses TLS if true, else plain TCP")
-	certFile   = flag.String("cert_file", "", "The TLS cert file")
-	keyFile    = flag.String("key_file", "", "The TLS key file")
-	port       = flag.Int("port", 9070, "The adapterserver port")
+	tls      = flag.Bool("tls", false, "Connection uses TLS if true, else plain TCP")
+	certFile = flag.String("cert_file", "", "The TLS cert file")
+	keyFile  = flag.String("key_file", "", "The TLS key file")
+	port     = flag.Int("port", 9070, "The adapterserver port")
 )
 
 type myProtoServiceServer struct {
@@ -27,8 +26,8 @@ type myProtoServiceServer struct {
 
 // GetFeature returns the feature at the given point.
 func (s *myProtoServiceServer) HandleMyproto(ctx context.Context, template *Template) (*OutputTemplate, error) {
-
-	return &OutputTemplate{User: "MyUser", ValidUseCount: 1}, nil
+	log.Print("Serving a request !!!!")
+	return &OutputTemplate{User: []byte("Nils"), ValidUseCount: 1}, nil
 }
 
 func newServer() *myProtoServiceServer {
@@ -57,7 +56,8 @@ func main() {
 		opts = []grpc.ServerOption{grpc.Creds(creds)}
 	}
 	grpcServer := grpc.NewServer(opts...)
-	service.RegisterChannelzServiceToServer(grpcServer)
 	RegisterHandleMyprotoServiceServer(grpcServer, newServer())
+	log.Print("Begin to serve")
 	grpcServer.Serve(lis)
+	log.Print("Serving")
 }

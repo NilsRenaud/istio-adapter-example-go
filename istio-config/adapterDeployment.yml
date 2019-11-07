@@ -30,7 +30,7 @@ spec:
         app: exampleadapter
     spec:
       containers:
-        - image: mixer-adapter:12
+        - image: mixer-adapter-adapterserver:5
           name: exampleadapter-app
           ports:
             - containerPort: 9070

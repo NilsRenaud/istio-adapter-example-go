@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -t mixer-adapter-adapterserver:3 .
+docker build -t mixer-adapter-adapterserver:5 .
