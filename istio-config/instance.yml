@@ -1,0 +1,10 @@
+apiVersion: config.istio.io/v1alpha2
+kind: instance
+metadata:
+  name: i1
+  namespace: istio-system
+spec:
+  template: myproto
+  params:
+    key: request.url_path | "unknown"
+    path: request.path | "/"

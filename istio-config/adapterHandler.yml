@@ -1,0 +1,11 @@
+apiVersion: config.istio.io/v1alpha2
+kind: handler
+metadata:
+  name: h1
+  namespace: istio-system
+spec:
+  adapter: exampleadapter
+  connection:
+    address: exampleadapter:9070
+  params:
+    valid_duration: 1s

@@ -1,0 +1,22 @@
+syntax = "proto3";
+package myproto;
+import "extensions.proto";
+option (istio.mixer.adapter.model.v1beta1.template_variety) = TEMPLATE_VARIETY_CHECK_WITH_OUTPUT;
+option java_package = "com.forgerock.generated";
+
+
+service HandleMyprotoService {
+    // HandleMyproto is called by Mixer at request-time to deliver 'authorization' instances to the backend.
+    rpc HandleMyproto(Template) returns (OutputTemplate);
+
+}
+
+message Template {
+    string key = 1;
+    string path = 2;
+}
+message OutputTemplate {
+    string user = 1;
+    // The number of uses for which this result can be considered valid.
+    int64 valid_use_count = 4;
+}
