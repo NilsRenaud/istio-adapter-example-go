@@ -18,5 +18,5 @@ message Template {
 message OutputTemplate {
     string user = 1;
     // The number of uses for which this result can be considered valid.
-    int64 valid_use_count = 4;
+    int64 valid_use_count = 2;
 }

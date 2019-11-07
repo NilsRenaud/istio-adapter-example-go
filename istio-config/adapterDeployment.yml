@@ -30,8 +30,13 @@ spec:
         app: exampleadapter
     spec:
       containers:
-        - image: mixer-adapter-adapterserver:5
+        - image: mixer-adapter-adapterserver:7
           name: exampleadapter-app
           ports:
             - containerPort: 9070
               protocol: TCP
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+            privileged: true

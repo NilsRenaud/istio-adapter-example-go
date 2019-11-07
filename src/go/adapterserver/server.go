@@ -4,13 +4,14 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"google.golang.org/grpc"
+	"istio.io/api/mixer/adapter/model/v1beta1"
 	"log"
 	"net"
 
-	"google.golang.org/grpc"
-
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/testdata"
+	rpc "istio.io/gogo-genproto/googleapis/google/rpc"
 )
 
 var (
@@ -25,9 +26,11 @@ type myProtoServiceServer struct {
 }
 
 // GetFeature returns the feature at the given point.
-func (s *myProtoServiceServer) HandleMyproto(ctx context.Context, template *Template) (*OutputTemplate, error) {
+func (s *myProtoServiceServer) HandleMyproto(ctx context.Context, template *HandleMyprotoRequest) (*HandleMyprotoResponse, error) {
 	log.Print("Serving a request !!!!")
-	return &OutputTemplate{User: []byte("Nils"), ValidUseCount: 1}, nil
+	var checkResult = v1beta1.CheckResult{rpc.Status{0, "OK", nil}, 10, 1}
+	var output = OutputMsg{User: "Nils", ValidUseCount: 1}
+	return &HandleMyprotoResponse{&checkResult, &output}, nil
 }
 
 func newServer() *myProtoServiceServer {
